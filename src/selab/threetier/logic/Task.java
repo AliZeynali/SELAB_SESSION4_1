@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.SimpleFormatter;
 
-public class Task extends Entity {
+public class Task extends Entity implements Comparable<Task>{
     private String title;
     private Date start;
     private Date end;
@@ -32,7 +32,25 @@ public class Task extends Entity {
         Storage.getInstance().getTasks().addOrUpdate(this);
     }
 
+    public void delete(){
+        Storage.getInstance().getTasks().delete( this);
+    }
     public static ArrayList<Task> getAll() {
         return Storage.getInstance().getTasks().getAll();
+    }
+    public boolean hasOverlap(Task task){
+        if ((task.start.after(this.end)) || (task.end.before(this.start))){
+            return false;
+        }
+        return true;
+    }
+    public boolean manteghi(){
+        if (this.end.after(this.start)){
+            return true;
+        }
+        return false;
+    }
+    public int compareTo(Task task){
+        return task.start.compareTo(this.start);
     }
 }

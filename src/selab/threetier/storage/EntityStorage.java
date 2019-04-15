@@ -1,8 +1,8 @@
 package selab.threetier.storage;
 import selab.threetier.logic.Entity;
+import selab.threetier.logic.Task;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 public class EntityStorage<T extends Entity> {
 
@@ -22,10 +22,16 @@ public class EntityStorage<T extends Entity> {
             list.put(id, item);
         return id;
     }
+    public void delete(T item){
+        list.remove(item.getId());
+    }
 
     public ArrayList<T> getAll() {
-        return new ArrayList<T>(list.values());
+        ArrayList<T> tasks = new ArrayList<T>(list.values());
+        return tasks;
     }
+
+
 
     public T get(int id) {
         return list.get(id);

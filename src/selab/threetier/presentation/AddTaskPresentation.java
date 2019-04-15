@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
@@ -30,6 +31,19 @@ public class AddTaskPresentation extends JSONPresentation {
             newTask.setEnd(new SimpleDateFormat("y-M-d H:m:s").parse(request.getString("end")));
         } catch (ParseException ex) {
             throw new IOException("Invalid date/time format");
+        }
+        if (!newTask.manteghi()){
+
+            return null;
+
+        }
+        ArrayList<Task> tasks =  Task.getAll();
+        for (Task task: tasks
+             ) {
+            if (task.hasOverlap(newTask)){
+                return null;
+            }
+
         }
         newTask.save();
 

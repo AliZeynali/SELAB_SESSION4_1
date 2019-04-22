@@ -4,7 +4,7 @@ import selab.threetier.logic.Task;
 
 import java.util.*;
 
-public class EntityStorage<T extends Entity> {
+public class EntityStorage<T extends Entity & Comparable<T>> {
 
     private HashMap<Integer, T> list = new HashMap<Integer, T>();
     private int counter = 0;
@@ -28,6 +28,7 @@ public class EntityStorage<T extends Entity> {
 
     public ArrayList<T> getAll() {
         ArrayList<T> tasks = new ArrayList<T>(list.values());
+        Collections.sort(tasks);
         return tasks;
     }
 
